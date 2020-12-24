@@ -1,0 +1,12 @@
+language: python
+python:
+  - "3.8"
+install:
+  - pip install virtualenv
+  - python3 -m venv venv
+  - pip install -r requirements.txt
+before_script:
+  - python manage.py migrate
+script:
+  - flake8
+  - python manage.py test
