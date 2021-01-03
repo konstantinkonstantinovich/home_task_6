@@ -1,0 +1,15 @@
+{% block content %}
+    <h1>Pythagorean theorem calculator</h1>
+    <form method="post">
+        {% if gip %}
+            <p> гипотенуза рава {{ gip }}
+        {% else %}
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="form-actions">
+                <button type="submit">Send and get answer</button>
+            </div>
+        {% endif %}
+    </form>
+{% endblock %}
+

@@ -1,8 +1,12 @@
+import math
+
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
+
+from polls.forms import PythagoreanTheoremFrom
 
 from .models import Choice, Question
 
@@ -55,3 +59,23 @@ def vote(request, question_id):
         # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results',
                                             args=(question.id,)))
+
+
+def contact_form(request):
+    gip = None
+    if request.method == "GET":
+        form = PythagoreanTheoremFrom()
+    else:
+        form = PythagoreanTheoremFrom(request.POST)
+        if form.is_valid():
+            first_leg = form.cleaned_data['first_leg']
+            second_leg = form.cleaned_data['second_leg']
+            gip = math.sqrt(pow(first_leg, 2) + pow(second_leg, 2))
+    return render(
+        request,
+        "polls/template.html",
+        context={
+            "form": form,
+            "gip": gip
+        }
+    )
