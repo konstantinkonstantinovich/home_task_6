@@ -101,21 +101,14 @@ def Authorization_modelform(request):
 
 
 def output_personal_data(request, id):
-    pn = None
     if request.method == "GET":
-        form = MyPersonModelForm(instance=pn)
         pn = get_object_or_404(MyPerson, id=id)
+        form = MyPersonModelForm(instance=pn)
     else:
+        pn = get_object_or_404(MyPerson, id=id)
         form = MyPersonModelForm(request.POST, instance=pn)
         if form.is_valid():
-            pn = get_object_or_404(MyPerson, id=id)
-            email = form.cleaned_data['email']
-            first_name = form.cleaned_data['first_name']
-            last_name = form.cleaned_data['last_name']
-            pn.email = email
-            pn.first_name = first_name
-            pn.last_name = last_name
-            pn.save()
+            form.save()
     return render(
         request,
         "polls/template3.html",
