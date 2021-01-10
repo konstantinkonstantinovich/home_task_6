@@ -36,3 +36,12 @@ class MyPerson(models.Model):
 
     def __str__(self):
         return self.email
+
+
+class LogModel(models.Model):
+    path = models.CharField(max_length=250)
+    method = models.CharField(max_length=250)
+    timestamps = models.DateTimeField(auto_now_add=False)
+
+    def __str__(self):
+        return self.path
