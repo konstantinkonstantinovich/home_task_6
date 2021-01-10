@@ -100,7 +100,7 @@ def Authorization_modelform(request):
     )
 
 
-def output_personal_data(request, id):
+def output_personal_data(request, id):  # noqa: A002
     if request.method == "GET":
         pn = get_object_or_404(MyPerson, id=id)
         form = MyPersonModelForm(instance=pn)
