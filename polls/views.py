@@ -81,31 +81,28 @@ def contact_form(request):
     )
 
 
-def Authorization_modelform(request):
-    person_new = None
+def authorization_form(request):
     if request.method == "GET":
         form = MyPersonModelForm()
     else:
         form = MyPersonModelForm(request.POST)
         if form.is_valid():
-            person_new = form.save()
+            form.save()
             return redirect('polls:person')
     return render(
         request,
         "polls/template2.html",
         context={
             "form": form,
-            "person_new": person_new
         }
     )
 
 
 def output_personal_data(request, id):  # noqa: A002
+    pn = get_object_or_404(MyPerson, id=id)
     if request.method == "GET":
-        pn = get_object_or_404(MyPerson, id=id)
         form = MyPersonModelForm(instance=pn)
     else:
-        pn = get_object_or_404(MyPerson, id=id)
         form = MyPersonModelForm(request.POST, instance=pn)
         if form.is_valid():
             form.save()

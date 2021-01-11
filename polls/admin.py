@@ -23,7 +23,7 @@ class QuestionAdmin(admin.ModelAdmin):
     inlines = [ChoiceInline]
     list_display = ('question_text', 'pub_date', 'was_published_recently')
     list_filter = ['pub_date']
-    searpolls_personch_fields = ['question_text']
+    polls_person = ['question_text']
 
 
 class LogModelAdmin(admin.ModelAdmin):
