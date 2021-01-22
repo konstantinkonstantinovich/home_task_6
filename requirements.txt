@@ -11,3 +11,5 @@ pyflakes==2.2.0
 pytz==2020.4
 six==1.15.0
 sqlparse==0.4.1
+
+django-debug-toolbar~=3.2
