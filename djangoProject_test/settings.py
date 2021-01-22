@@ -159,3 +159,5 @@ STATICFILES_DIRS = [
 
 # silk
 SILKY_PYTHON_PROFILER = True
+SILKY_AUTHORISATION = True
+SILKY_PERMISSIONS = lambda user: user.is_superuse  # noqa: E731
