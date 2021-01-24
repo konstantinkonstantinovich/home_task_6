@@ -130,7 +130,7 @@ def reminder_data_form(request):
             reminder_text = form.cleaned_data['reminder_text']
             reminder_time = form.cleaned_data['reminder_time']
             time_now = timezone.now()
-            if reminder_time <= time_now or reminder_time.day > time_now.day:
+            if reminder_time <= time_now or reminder_time.day > time_now.day+1:
                 return redirect('polls:reminder')
             n = str(time_now).split('.')
             del n[1]
