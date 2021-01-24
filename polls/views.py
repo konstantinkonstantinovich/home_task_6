@@ -1,6 +1,6 @@
-import math
-
 import datetime
+
+import math  # noqa: I202
 
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
@@ -12,7 +12,7 @@ from polls.forms import MyPersonModelForm, PythagoreanTheoremFrom, ReminderForm
 
 from .models import Choice, MyPerson, Question
 
-from .tasks import reminder_task as remainder_send_mail
+from .tasks import reminder_task as remainder_send_mail  # noqa : I202
 
 
 class IndexView(generic.ListView):
@@ -130,7 +130,8 @@ def reminder_data_form(request):
             reminder_text = form.cleaned_data['reminder_text']
             reminder_time = form.cleaned_data['reminder_time']
             time_now = timezone.now()
-            if reminder_time <= time_now or reminder_time.day > time_now.day+1:
+            tom = datetime.utcnow() + datetime.timedelta(days=2)
+            if reminder_time <= time_now or reminder_time.day > tom:
                 return redirect('polls:reminder')
             n = str(time_now).split('.')
             del n[1]
@@ -139,7 +140,9 @@ def reminder_data_form(request):
             date = datetime.datetime.strptime(n[0], '%Y-%m-%d %H:%M:%S')
             end_date = datetime.datetime.strptime(n1[0], '%Y-%m-%d %H:%M:%S')
             result = end_date-date
-            remainder_send_mail.apply_async((email, reminder_text), countdown=result.seconds)
+            remainder_send_mail.apply_async((
+                email,
+                reminder_text), countdown=result.seconds)
             return redirect('polls:reminder')
     return render(
         request,
