@@ -7,6 +7,7 @@ urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
     path('triangle/', views.contact_form, name='triangle'),
     path('person/', views.authorization_form, name='person'),
+    path('reminder/', views.reminder_data_form, name='reminder'),
     path('person/<int:id>/', views.output_personal_data, name='person'),
     path('<int:pk>/', views.DetailView.as_view(), name='detail'),
     path('<int:pk>/results/', views.ResultsView.as_view(), name='results'),

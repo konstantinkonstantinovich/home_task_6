@@ -1,0 +1,10 @@
+{% block content %}
+  <h1>Time reminder form</h1>
+  <form method="post">
+    {% csrf_token %}
+        {{ form.as_p }}
+    <div class="form-actions">
+      <button type="submit">Send a reminder</button>
+    </div>
+  </form>
+{% endblock %}

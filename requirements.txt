@@ -13,3 +13,4 @@ six==1.15.0
 sqlparse==0.4.1
 
 django-debug-toolbar~=3.2
+celery~=5.0.5

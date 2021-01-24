@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,6 +24,8 @@ SECRET_KEY = os.environ.get("SECRET_KEY", 'mysecretkeyis...')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+
+BROKER_URL = 'django://'
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django_celery_results',
     'polls.apps.PollsConfig',
     'connection.apps.ConnectionConfig',
     'django_extensions',
@@ -161,3 +163,10 @@ STATICFILES_DIRS = [
 SILKY_PYTHON_PROFILER = True
 SILKY_AUTHORISATION = True
 SILKY_PERMISSIONS = lambda user: user.is_superuse  # noqa: E731
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Celery Configuration Options
+CELERY_DEBUG = False
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_RESULT_BACKEND = 'django-db'
