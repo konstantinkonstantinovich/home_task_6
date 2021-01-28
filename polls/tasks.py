@@ -58,7 +58,7 @@ def parse_quotes():
             if quote is None:
                 send_mail('Notification:',
                           'Goood job', 'Vova@gmail.com', ['admin@example.com'])
-                exit()
+                return
             break
         page_next = page.a.get('href')
         r = requests.get('https://quotes.toscrape.com' + page_next)
