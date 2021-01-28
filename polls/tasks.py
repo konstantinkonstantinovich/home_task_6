@@ -53,11 +53,12 @@ def parse_quotes():
                     it += 1
             if it == 5 or it > 5:
                 break
+        page = soup.find('li', {'class': 'next'})
+        if page is None:
             if quote is None:
                 send_mail('Notification:',
                           'Goood job', 'Vova@gmail.com', ['admin@example.com'])
-        page = soup.find('li', {'class': 'next'})
-        if page is None:
+                exit()
             break
         page_next = page.a.get('href')
         r = requests.get('https://quotes.toscrape.com' + page_next)
