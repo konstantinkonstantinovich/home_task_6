@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Choice, LogModel, MyPerson, Question
+from .models import Author, Choice, LogModel, MyPerson, Question, Quote
 
 
 @admin.register(MyPerson)
@@ -32,5 +32,19 @@ class LogModelAdmin(admin.ModelAdmin):
     fields = ['path', 'method', 'timestamps']
 
 
+class AuthorAdmin(admin.ModelAdmin):
+    list_display = ['name']
+    search_fields = ['name']
+    fields = ['name']
+
+
+class QuoteAdmin(admin.ModelAdmin):
+    list_display = ['quote']
+    search_fields = ['quote']
+    fields = ['quote']
+
+
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(LogModel, LogModelAdmin)
+admin.site.register(Author, AuthorAdmin)
+admin.site.register(Quote, QuoteAdmin)

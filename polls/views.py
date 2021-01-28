@@ -2,11 +2,13 @@ import datetime
 
 import math  # noqa: I202
 
+from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
+
 
 from polls.forms import MyPersonModelForm, PythagoreanTheoremFrom, ReminderForm
 
@@ -130,7 +132,7 @@ def reminder_data_form(request):
             reminder_text = form.cleaned_data['reminder_text']
             reminder_time = form.cleaned_data['reminder_time']
             time_now = timezone.now()
-            if reminder_time <= time_now or reminder_time.day > time_now+1:
+            if reminder_time <= time_now:
                 return redirect('polls:reminder')
             n = str(time_now).split('.')
             del n[1]
@@ -141,7 +143,8 @@ def reminder_data_form(request):
             result = end_date-date
             remainder_send_mail.apply_async((
                 email,
-                reminder_text), countdown=result.seconds)
+                reminder_text), coundown=result.seconds)
+            messages.add_message(request, messages.SUCCESS, 'Message sent')
             return redirect('polls:reminder')
     return render(
         request,

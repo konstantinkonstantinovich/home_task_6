@@ -32,7 +32,7 @@ class Citizen(models.Model):
 
 
 class Name(models.Model):
-    citizen = models.ManyToManyField(Citizen, null=True)
+    citizen = models.ManyToManyField(Citizen)
     name = models.CharField(max_length=200)
 
     def __str__(self):
