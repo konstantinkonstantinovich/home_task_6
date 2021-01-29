@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
-
+from django.views.decorators.cache import cache_page
 
 from polls.forms import MyPersonModelForm, PythagoreanTheoremFrom, ReminderForm
 
@@ -122,6 +122,7 @@ def output_personal_data(request, id):  # noqa: A002
     )
 
 
+@cache_page(10)
 def reminder_data_form(request):
     if request.method == "GET":
         form = ReminderForm()

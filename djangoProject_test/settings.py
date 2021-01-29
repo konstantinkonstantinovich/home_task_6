@@ -162,7 +162,17 @@ STATICFILES_DIRS = [
 # silk
 SILKY_PYTHON_PROFILER = True
 SILKY_AUTHORISATION = True
-SILKY_PERMISSIONS = lambda user: user.is_superuse  # noqa: E731
+# SILKY_PERMISSIONS = lambda user: user.is_superuse  # noqa: E731
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        }
+    }
+}
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # Celery Configuration Options
