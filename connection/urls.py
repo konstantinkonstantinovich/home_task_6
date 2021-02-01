@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.decorators.cache import cache_page
 
 from . import views
 
@@ -13,4 +14,6 @@ urlpatterns = [
          views.NameDelete.as_view(), name='name-delete'),
     path('name/<int:pk>/', views.NameDetailView.as_view(), name='name-detail'),
     path('name/', views.NameListView.as_view(), name='name'),
+    path('country/',
+         cache_page(10)(views.CountryCityList.as_view()), name='country')
 ]

@@ -7,7 +7,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
 
-from connection.models import Name  # noqa: I100
+from connection.models import City, Name  # noqa: I100
 
 
 def index(request):
@@ -73,3 +73,12 @@ class NameListView(ListView):
         context = super().get_context_data(**kwargs)
         context['now'] = timezone.now()
         return context
+
+
+class CountryCityList(ListView):
+    model = City
+    template_name = 'connection/country_list.html'
+    paginate_by = 100
+
+    def get_queryset(self):
+        return super(CountryCityList, self).get_queryset().select_related('country')  # noqa:E501
