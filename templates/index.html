@@ -1,0 +1,17 @@
+
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Local Connection Home</h1>
+
+    <p>Welcome to <em>LocalConnection</em>, a very basic Django website developed as a tutorial example on the Mozilla Developer Network.</p>
+  <h2>Dynamic content</h2>
+
+  <p>The Connection has the following record names, countries, cities:</p>
+    <ul>
+        <li><strong>Names:</strong> {{ num_names }}</li>
+        <li><strong>Country:</strong> {{ num_country }}</li>
+        <li><strong>City:</strong> {{ num_city }}</li>
+    </ul>
+  You have visited this page {{ num_visits }} time{% if num_visits > 1 %}s{% endif %}.
+{% endblock %}

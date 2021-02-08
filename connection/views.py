@@ -1,7 +1,7 @@
 # Create your views here.
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.utils import timezone
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
@@ -11,7 +11,21 @@ from connection.models import City, Country, Name  # noqa: I100
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the connection index.")
+    num_names = Name.objects.count()
+    num_country = Country.objects.count()
+    num_city = City.objects.count()
+    num_visits = request.session.get('num_visits', 0)
+    request.session['num_visits'] = num_visits + 1
+    return render(
+        request,
+        'index.html',
+        context={
+            'num_names': num_names,
+            'num_visits': num_visits,
+            'num_country': num_country,
+            'num_city': num_city,
+        },
+    )
 
 
 def success(request):
@@ -80,9 +94,5 @@ class CountryCityList(ListView):
     template_name = 'connection/country_list.html'
     paginate_by = 100
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        for country in Country.objects.annotate():
-            result = country.city
-        context['city'] = result
-        return context
+    def get_queryset(self):
+        return super(CountryCityList, self).get_queryset().select_related('country')  # noqa:E501

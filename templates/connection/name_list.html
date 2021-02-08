@@ -1,11 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<h1>Name list</h1>
+{% extends "base_generic.html" %}
+
+
+{% block content %}
+  <h1>Name list</h1>
+<body>
+{% if object_list %}
 <ul>
-{% for object in object_list %}
-    <li>{{ now|date }} - {{ object.name }}</li>
-{% empty %}
-    <li>No name yet.</li>
-{% endfor %}
+    {% for object in object_list %}
+        <li>
+            {{ now|date }} - {{ object.name }}
+        </li>
+    {% endfor %}
 </ul>
-</html>
+{% else %}
+    <p>No name now.</p>
+{% endif %}
+</body>
+{% endblock %}
