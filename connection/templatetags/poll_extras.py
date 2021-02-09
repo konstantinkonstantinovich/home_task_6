@@ -1,13 +1,12 @@
+import json
+import os
+import re
+
 from django import template
 from django.template.defaultfilters import stringfilter
 
 from polls.models import Quote
 
-import json
-
-import os
-
-import re
 
 dir_path = os.path.dirname(os.path.realpath("word.json"))
 
