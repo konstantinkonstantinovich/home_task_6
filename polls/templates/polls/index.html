@@ -7,8 +7,11 @@
 {% else %}
     <p>No polls are available.</p>
     {% load poll_extras %}
-    {% parsing_output as quotes %}
-    <p> {{ quotes }} </p>
+    {% parsing_output as li %}
+    {% for i in li %}
+        <p> {{ i }}</p>
+    {% endfor %}
+    {% filter replace_func %} Hi, anus, you make ass {% endfilter %}
 {% endif %}
 {% load static %}
 
