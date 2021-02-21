@@ -14,6 +14,8 @@ urlpatterns = [
          views.NameDelete.as_view(), name='name-delete'),
     path('name/<int:pk>/', views.NameDetailView.as_view(), name='name-detail'),
     path('name/', views.NameListView.as_view(), name='name'),
+    path('contact/', views.contact_form, name="connection-contact"),
+
     path('country/',
          cache_page(10)(views.CountryCityList.as_view()), name='country')
 ]

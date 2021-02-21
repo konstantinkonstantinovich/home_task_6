@@ -1,13 +1,18 @@
 # Create your views here.
+from connection.forms import ContactForm
+
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
+from django.template.loader import render_to_string
 from django.utils import timezone
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
 
 from connection.models import City, Country, Name  # noqa: I100
+
+from .tasks import send_mail_task
 
 
 def index(request):
@@ -96,3 +101,26 @@ class CountryCityList(ListView):
 
     def get_queryset(self):
         return super(CountryCityList, self).get_queryset().select_related('country')  # noqa:E501
+
+
+def contact_form(request):
+    data = dict()
+    if request.method == "GET":
+        form = ContactForm()
+    else:
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            from_email = form.cleaned_data['from_email']
+            message = form.cleaned_data['message']
+            send_mail_task.delay(subject, message, from_email)
+            return redirect('connection:index')
+        else:
+            data['form_is_valid'] = False
+    context = {'form': form}
+    data['html_form'] = render_to_string(
+        template_name='includes/contact.html',
+        context=context,
+        request=request
+    )
+    return JsonResponse(data)

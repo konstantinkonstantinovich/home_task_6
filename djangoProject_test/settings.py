@@ -45,11 +45,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'django.contrib.sites',
     'django_celery_results',
     'polls.apps.PollsConfig',
     'connection.apps.ConnectionConfig',
     'django_extensions',
+    'widget_tweaks'
 ]
 
 if DEBUG:
