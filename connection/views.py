@@ -1,4 +1,6 @@
 # Create your views here.
+from django.contrib import messages
+
 from connection.forms import ContactForm
 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -114,6 +116,7 @@ def contact_form(request):
             from_email = form.cleaned_data['from_email']
             message = form.cleaned_data['message']
             send_mail_task.delay(subject, message, from_email)
+            messages.add_message(request, messages.SUCCESS, 'Message sent')
             return redirect('connection:index')
         else:
             data['form_is_valid'] = False
